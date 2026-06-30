@@ -64,6 +64,8 @@ jobs:
               mysql-usuarios:
                 image: mysql:8.0
                 container_name: mysql-usuarios
+                ports:
+                  - "3306:3306"
                 environment:
                   MYSQL_ROOT_PASSWORD: root
                   MYSQL_DATABASE: fitlife_usuarios_db
@@ -80,6 +82,8 @@ jobs:
               mysql-reservas:
                 image: mysql:8.0
                 container_name: mysql-reservas
+                ports:
+                  - "3307:3306"
                 environment:
                   MYSQL_ROOT_PASSWORD: root
                   MYSQL_DATABASE: fitlife_reservas_db
@@ -96,6 +100,8 @@ jobs:
               mysql-pagos:
                 image: mysql:8.0
                 container_name: mysql-pagos
+                ports:
+                  - "3308:3306"
                 environment:
                   MYSQL_ROOT_PASSWORD: root
                   MYSQL_DATABASE: fitlife_pagos_db
@@ -112,6 +118,8 @@ jobs:
               mysql-notificaciones:
                 image: mysql:8.0
                 container_name: mysql-notificaciones
+                ports:
+                  - "3309:3306"
                 environment:
                   MYSQL_ROOT_PASSWORD: root
                   MYSQL_DATABASE: fitlife_notificaciones_db
@@ -128,6 +136,8 @@ jobs:
               mysql-locations:
                 image: mysql:8.0
                 container_name: mysql-locations
+                ports:
+                  - "3310:3306"
                 environment:
                   MYSQL_ROOT_PASSWORD: root
                   MYSQL_DATABASE: fitlife_locations_db
@@ -144,6 +154,9 @@ jobs:
               rabbitmq:
                 image: rabbitmq:3-management
                 container_name: rabbitmq
+                ports:
+                  - "5672:5672"
+                  - "15672:15672"
                 environment:
                   RABBITMQ_DEFAULT_USER: guest
                   RABBITMQ_DEFAULT_PASS: guest
@@ -165,15 +178,13 @@ jobs:
                   - fitlife-network
                 depends_on:
                   - ms-usuarios
-                  - ms-reservas
-                  - ms-gestion-pago
-                  - ms-notificaciones
-                  - ms-location
                 restart: always
             
               ms-usuarios:
                 image: mariacarrero/fitlife-usuarios:latest
                 container_name: ms-usuarios
+                ports:
+                  - "8085:8085"
                 environment:
                   - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-usuarios:3306/fitlife_usuarios_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
                   - SPRING_DATASOURCE_USERNAME=root
@@ -188,6 +199,8 @@ jobs:
               ms-reservas:
                 image: mariacarrero/fitlife-reservas:latest
                 container_name: ms-reservas
+                ports:
+                  - "8083:8083"
                 environment:
                   - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-reservas:3306/fitlife_reservas_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
                   - SPRING_DATASOURCE_USERNAME=root
@@ -202,6 +215,8 @@ jobs:
               ms-gestion-pago:
                 image: mariacarrero/fitlife-gestionpago:latest
                 container_name: ms-gestion-pago
+                ports:
+                  - "8086:8086"
                 environment:
                   - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-pagos:3306/fitlife_pagos_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
                   - SPRING_DATASOURCE_USERNAME=root
@@ -222,6 +237,8 @@ jobs:
               ms-notificaciones:
                 image: mariacarrero/fitlife-notificaciones:latest
                 container_name: ms-notificaciones
+                ports:
+                  - "8084:8084"
                 environment:
                   - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-notificaciones:3306/fitlife_notificaciones_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
                   - SPRING_DATASOURCE_USERNAME=root
@@ -242,6 +259,8 @@ jobs:
               ms-location:
                 image: mariacarrero/fitlife-location:latest
                 container_name: ms-location
+                ports:
+                  - "8082:8082"
                 environment:
                   - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-locations:3306/fitlife_locations_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
                   - SPRING_DATASOURCE_USERNAME=root
