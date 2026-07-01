@@ -2,7 +2,7 @@ package com.fitlife.gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.cors.reactive.CorsConfiguration;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
@@ -19,11 +19,7 @@ public class CorsConfig {
         corsConfig.addAllowedOriginPattern("*"); // Para desarrollo
         
         // Permitir todos los métodos
-        corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("POST");
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedMethod("DELETE");
-        corsConfig.addAllowedMethod("OPTIONS");
+        corsConfig.addAllowedMethod("*");
         
         // Permitir todas las cabeceras
         corsConfig.addAllowedHeader("*");
